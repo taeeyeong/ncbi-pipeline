@@ -1,0 +1,15 @@
+version: '3'
+x-airflow-common:
+  &airflow-common
+  image: apache/airflow:2.0.1
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: mongodb://airflow:airflow@mongo/airflow
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+  volumes:
+    - .
+    mongo:
+      condition: service_healthy
